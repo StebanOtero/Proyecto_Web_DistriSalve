@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { v } from "../../../styles/variables";
 import {
@@ -6,12 +6,25 @@ import {
   Btnsave,
   ConvertirCapitalize,
   useProductosStore,
+  ContainerSelector,
+  Selector,
+  useMarcaStore,
+  Btnfiltro,
+  RegistrarMarca,
 } from "../../../index";
 import { useForm } from "react-hook-form";
 import { useEmpresaStore } from "../../../store/EmpresaStore";
 export function RegistrarProductos({ onClose, dataSelect, accion }) {
   const { insertarproductos, editarproductos } = useProductosStore();
   const { dataempresa } = useEmpresaStore();
+  const { marcaItemSelect } = useMarcaStore();
+  const [stateMarca, setStateMarca] = useState(false);
+  const [openRegistroMarca, SetopenRegistroMarca] = useState(false);
+  const [subaccion, setAccion] = useState("");
+  const nuevoRegistroMarca = () => {
+    SetopenRegistroMarca(!openRegistroMarca);
+    setAccion("Nuevo");
+  };
   const {
     register,
     formState: { errors },
@@ -44,7 +57,9 @@ export function RegistrarProductos({ onClose, dataSelect, accion }) {
         <div className="headers">
           <section>
             <h1>
-              {accion == "Editar" ? "Editar productos" : "Registrar nuevo producto"}
+              {accion == "Editar"
+                ? "Editar productos"
+                : "Registrar nuevo producto"}
             </h1>
           </section>
 
@@ -56,7 +71,7 @@ export function RegistrarProductos({ onClose, dataSelect, accion }) {
         <form className="formulario" onSubmit={handleSubmit(insertar)}>
           <section>
             <article>
-              <InputText icono={<v.iconomarca />}>
+              <InputText icono={<v.icononombre />}>
                 <input
                   className="form__field"
                   defaultValue={dataSelect.descripcion}
@@ -66,10 +81,26 @@ export function RegistrarProductos({ onClose, dataSelect, accion }) {
                     required: true,
                   })}
                 />
-                <label className="form__label">Producto</label>
+                <label className="form__label">Descripcion</label>
                 {errors.nombre?.type === "required" && <p>Campo requerido</p>}
               </InputText>
             </article>
+            <ContainerSelector>
+              <label>Marca:</label>
+              <Selector
+                funcion={() => setStateMarca(!stateMarca)}
+                state={stateMarca}
+                color="#fc6027"
+                texto1="❤️"
+                texto2={marcaItemSelect?.descripcion}
+              />
+              <Btnfiltro
+                bgcolor="#f6f3f3"
+                funcion={nuevoRegistroMarca}
+                textcolor="#353535"
+                icono={<v.agregar />}
+              />
+            </ContainerSelector>
 
             <div className="btnguardarContent">
               <Btnsave
@@ -80,6 +111,13 @@ export function RegistrarProductos({ onClose, dataSelect, accion }) {
             </div>
           </section>
         </form>
+        {openRegistroMarca && (
+          <RegistrarMarca
+            accion={subaccion}
+            onClose={() => SetopenRegistroMarca(!openRegistroMarca)}
+            dataSelect={dataSelect}
+          />
+        )}
       </div>
     </Container>
   );
