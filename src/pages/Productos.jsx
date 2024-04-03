@@ -8,8 +8,10 @@ import {
   useProductosStore,
 } from "../index";
 export function Productos() {
-  const {mostrarMarca} = useMarcaStore();
-  const { mostrarproductos, dataproductos, buscarproductos, buscador } = useProductosStore();
+  const { mostrarMarca } = useMarcaStore();
+  const { mostrarcategorias } = useCategoriasStore();
+  const { mostrarproductos, dataproductos, buscarproductos, buscador } =
+    useProductosStore();
   const { dataempresa } = useEmpresaStore();
   const { isLoading, error } = useQuery({
     queryKey: ["mostrar productos", { id_empresa: dataempresa?.id }],
@@ -22,13 +24,19 @@ export function Productos() {
       { id_empresa: dataempresa.id, descripcion: buscador },
     ],
     queryFn: () =>
-    buscarproductos({ id_empresa: dataempresa.id, descripcion: buscador }),
+      buscarproductos({ id_empresa: dataempresa.id, descripcion: buscador }),
     enabled: dataempresa.id != null,
   });
 
   const { datamarcas } = useQuery({
     queryKey: ["mostrar marca", { id_empresa: dataempresa?.id }],
     queryFn: () => mostrarMarca({ id_empresa: dataempresa?.id }),
+    enabled: dataempresa?.id != null,
+  });
+
+  const { data: datacategorias } = useQuery({
+    queryKey: ["mostrar categorias", { id_empresa: dataempresa?.id }],
+    queryFn: () => mostrarcategorias({ id_empresa: dataempresa?.id }),
     enabled: dataempresa?.id != null,
   });
 
@@ -39,5 +47,5 @@ export function Productos() {
     return <span>Error...</span>;
   }
 
-  return <ProductosTemplate data={dataproductos}/>;
+  return <ProductosTemplate data={dataproductos} />;
 }

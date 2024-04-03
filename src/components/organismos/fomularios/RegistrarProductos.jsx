@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { v } from "../../../styles/variables";
+import { Device } from "../../../styles/breackpoints";
 import {
   InputText,
   Btnsave,
@@ -11,18 +12,29 @@ import {
   useMarcaStore,
   Btnfiltro,
   RegistrarMarca,
+  ListaGenerica,
+  useCategoriasStore,
+  RegistrarCategorias,
 } from "../../../index";
 import { useForm } from "react-hook-form";
 import { useEmpresaStore } from "../../../store/EmpresaStore";
 export function RegistrarProductos({ onClose, dataSelect, accion }) {
   const { insertarproductos, editarproductos } = useProductosStore();
   const { dataempresa } = useEmpresaStore();
-  const { marcaItemSelect } = useMarcaStore();
+  const { marcaItemSelect, selectMarca, datamarca } = useMarcaStore();
+  const { categoriasItemSelect, datacategorias, selectcategorias } =
+    useCategoriasStore();
   const [stateMarca, setStateMarca] = useState(false);
+  const [stateCategoria, setStateCategoria] = useState(false);
   const [openRegistroMarca, SetopenRegistroMarca] = useState(false);
+  const [openRegistroCategoria, SetopenRegistroCategoria] = useState(false);
   const [subaccion, setAccion] = useState("");
   const nuevoRegistroMarca = () => {
     SetopenRegistroMarca(!openRegistroMarca);
+    setAccion("Nuevo");
+  };
+  const nuevoRegistroCategoria = () => {
+    SetopenRegistroCategoria(!openRegistroCategoria);
     setAccion("Nuevo");
   };
   const {
@@ -69,7 +81,7 @@ export function RegistrarProductos({ onClose, dataSelect, accion }) {
         </div>
 
         <form className="formulario" onSubmit={handleSubmit(insertar)}>
-          <section>
+          <section className="seccion1">
             <article>
               <InputText icono={<v.icononombre />}>
                 <input
@@ -94,6 +106,15 @@ export function RegistrarProductos({ onClose, dataSelect, accion }) {
                 texto1="❤️"
                 texto2={marcaItemSelect?.descripcion}
               />
+              {stateMarca && (
+                <ListaGenerica
+                  setState={() => setStateMarca(!stateMarca)}
+                  bottom="-260px"
+                  scroll="scroll"
+                  data={datamarca}
+                  funcion={selectMarca}
+                />
+              )}
               <Btnfiltro
                 bgcolor="#f6f3f3"
                 funcion={nuevoRegistroMarca}
@@ -101,20 +122,126 @@ export function RegistrarProductos({ onClose, dataSelect, accion }) {
                 icono={<v.agregar />}
               />
             </ContainerSelector>
+            <article>
+              <InputText icono={<v.iconostock />}>
+                <input
+                  className="form__field"
+                  type="number"
+                  step="0.01"
+                  placeholder=""
+                  defaultValue={dataSelect.stock}
+                  {...register("stock", {
+                    required: true,
+                  })}
+                />
+                <label className="form__label">Stock</label>
+                {errors.stock?.type === "required" && <p>Campo requerido</p>}
+              </InputText>
+            </article>
 
-            <div className="btnguardarContent">
-              <Btnsave
-                icono={<v.iconoguardar />}
-                titulo="Guardar"
-                bgcolor="#ef552b"
+            <article>
+              <InputText icono={<v.iconostockminimo />}>
+                <input
+                  step="0.01"
+                  className="form__field"
+                  defaultValue={dataSelect.stock_minimo}
+                  type="number"
+                  placeholder=""
+                  {...register("stockminimo", {
+                    required: true,
+                  })}
+                />
+                <label className="form__label">Stock Minimo</label>
+                {errors.stockminimo?.type === "required" && (
+                  <p>Campo requerido</p>
+                )}
+              </InputText>
+            </article>
+
+            <ContainerSelector>
+              <label>categoria:</label>
+              <Selector
+                funcion={() => setStateCategoria(!stateCategoria)}
+                state={stateCategoria}
+                color="#fc6027"
+                texto1="❤️"
+                texto2={categoriasItemSelect?.descripcion}
               />
-            </div>
+              <Btnfiltro
+                bgcolor="#f6f3f3"
+                funcion={nuevoRegistroCategoria}
+                textcolor="#353535"
+                icono={<v.agregar />}
+              />
+              {stateCategoria && (
+                <ListaGenerica
+                  setState={() => setStateCategoria(!stateCategoria)}
+                  bottom="-260px"
+                  scroll="scroll"
+                  data={datacategorias}
+                  funcion={selectcategorias}
+                />
+              )}
+            </ContainerSelector>
           </section>
+
+          <section className="seccion2">
+            <article>
+              <InputText icono={<v.iconocodigobarras />}>
+                <input
+                  className="form__field"
+                  defaultValue={dataSelect.codigobarras}
+                  type="number"
+                  placeholder=""
+                  {...register("codigobarras", {
+                    required: true,
+                  })}
+                />
+                <label className="form__label">Codigo de Barras</label>
+                {errors.codigobarras?.type === "required" && (
+                  <p>Campo requerido</p>
+                )}
+              </InputText>
+            </article>
+
+            <article>
+              <InputText icono={<v.iconocodigointerno />}>
+                <input
+                  className="form__field"
+                  defaultValue={dataSelect.codigointerno}
+                  type="text"
+                  placeholder=""
+                  {...register("codigointerno", {
+                    required: true,
+                  })}
+                />
+                <label className="form__label">Codigo Interno</label>
+                {errors.codigointerno?.type === "required" && (
+                  <p>Campo requerido</p>
+                )}
+              </InputText>
+            </article>
+          </section>
+
+          <div className="btnguardarContent">
+            <Btnsave
+              icono={<v.iconoguardar />}
+              titulo="Guardar"
+              bgcolor="#ef552b"
+            />
+          </div>
         </form>
         {openRegistroMarca && (
           <RegistrarMarca
             accion={subaccion}
             onClose={() => SetopenRegistroMarca(!openRegistroMarca)}
+            dataSelect={dataSelect}
+          />
+        )}
+        {openRegistroCategoria && (
+          <RegistrarCategorias
+            accion={subaccion}
+            onClose={() => SetopenRegistroCategoria(!openRegistroCategoria)}
             dataSelect={dataSelect}
           />
         )}
@@ -136,13 +263,24 @@ const Container = styled.div`
   z-index: 1000;
 
   .sub-contenedor {
-    width: 500px;
-    max-width: 85%;
+    width: 100%;
+    max-width: 90%;
     border-radius: 20px;
     background: ${({ theme }) => theme.bgtotal};
     box-shadow: -10px 15px 30px rgba(10, 9, 9, 0.4);
     padding: 13px 36px 20px 36px;
     z-index: 100;
+    height: 90vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    &::webkit-scrollbar {
+      width: 6px;
+      border-radius: 10px;
+    }
+    &::webkit-scrollbar {
+      background-color: #484848;
+      border-radius: 10px;
+    }
 
     .headers {
       display: flex;
@@ -160,14 +298,24 @@ const Container = styled.div`
       }
     }
     .formulario {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 15px;
+      @media ${Device.tablet} {
+        grid-template-columns: repeat(2, 1fr);
+      }
       section {
         gap: 20px;
         display: flex;
         flex-direction: column;
-        .colorContainer {
-          .colorPickerContent {
-            padding-top: 15px;
-            min-height: 50px;
+          }
+          .btnguardarContent{
+            display: flex;
+            justify-content: end;
+            grid-column: 1;
+            @media  ${Device.tablet} {
+              grid-column. 2;
+            }
           }
         }
       }
