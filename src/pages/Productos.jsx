@@ -14,8 +14,8 @@ export function Productos() {
     useProductosStore();
   const { dataempresa } = useEmpresaStore();
   const { isLoading, error } = useQuery({
-    queryKey: ["mostrar productos", { id_empresa: dataempresa?.id }],
-    queryFn: () => mostrarproductos({ id_empresa: dataempresa?.id }),
+    queryKey: ["mostrar productos", { _id_empresa: dataempresa?.id }],
+    queryFn: () => mostrarproductos({ _id_empresa: dataempresa?.id }),
     enabled: dataempresa?.id != null,
   });
   const { data: buscardata } = useQuery({

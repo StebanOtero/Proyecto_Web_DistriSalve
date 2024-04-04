@@ -57,9 +57,49 @@ export function TablaProductos({
   };
   const columns = [
     {
+      accessorKey: "codigointerno",
+      header: "Codigo",
+      enableSorting:false,
+      cell: (info) => <td data-title="Codigo" className="ContentCell"> 
+        <span>
+          {info.getValue()}
+        </span>
+        </td>
+    },
+    {
       accessorKey: "descripcion",
       header: "Descripción",
       cell: (info) => <td data-title="Descripccion" className="ContentCell"> 
+        <span>
+          {info.getValue()}
+        </span>
+        </td>
+    },
+    {
+      accessorKey: "stock",
+      header: "Stock",
+      enableSorting:false,
+      cell: (info) => <td data-title="Stock" className="ContentCell"> 
+        <span>
+          {info.getValue()}
+        </span>
+        </td>
+    },
+    {
+      accessorKey: "codigobarras",
+      header: "Lote",
+      enableSorting:false,
+      cell: (info) => <td data-title="Lote" className="ContentCell"> 
+        <span>
+          {info.getValue()}
+        </span>
+        </td>
+    },
+    {
+      accessorKey: "precioventa",
+      header: "Pr. Venta",
+      enableSorting:false,
+      cell: (info) => <td data-title="Pr. Venta" className="ContentCell"> 
         <span>
           {info.getValue()}
         </span>
