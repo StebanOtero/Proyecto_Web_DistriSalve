@@ -24,8 +24,8 @@ export function Productos() {
       { id_empresa: dataempresa.id, descripcion: buscador },
     ],
     queryFn: () =>
-      buscarproductos({ id_empresa: dataempresa.id, descripcion: buscador }),
-    enabled: dataempresa.id != null,
+      buscarproductos({ _id_empresa: dataempresa.id, buscador: buscador }),
+      enabled: dataempresa.id != null,
   });
 
   const { datamarcas } = useQuery({

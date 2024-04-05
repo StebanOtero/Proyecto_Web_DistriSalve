@@ -45,32 +45,32 @@ export function RegistrarProductos({ onClose, dataSelect, accion }) {
   async function insertar(data) {
     if (accion === "Editar") {
       const p = {
-        id:dataSelect.id,
+        id: dataSelect.id,
         descripcion: ConvertirCapitalize(data.descripcion),
-        idmarca:marcaItemSelect.id,
-        stock:parseFloat(data.stock),
-        stock_minimo:parseFloat(data.codigointerno),
-        codigobarras:parseFloat(data.codigobarras),
-        codigointerno:data.codigointerno,
-        precioventa:parseFloat(data.precioventa),
-        preciocompra:parseFloat(data.preciocompra),
-        id_categoria:categoriasItemSelect.id,
-        id_empresa:dataempresa.id,
+        idmarca: marcaItemSelect.id,
+        stock: parseFloat(data.stock),
+        stock_minimo: parseFloat(data.stockminimo),
+        codigobarras: data.codigobarras,
+        codigointerno: data.codigointerno,
+        precioventa: parseFloat(data.precioventa),
+        preciocompra: parseFloat(data.preciocompra),
+        id_categoria: categoriasItemSelect.id,
+        id_empresa: dataempresa.id,
       };
       await editarproductos(p);
       onClose();
     } else {
       const p = {
         _descripcion: ConvertirCapitalize(data.descripcion),
-        _idmarca:marcaItemSelect.id,
-        _stock:parseFloat(data.stock),
-        _stock_minimo:parseFloat(data.codigointerno),
-        _codigobarras:parseFloat(data.codigobarras),
-        _codigointerno:data.codigointerno,
-        _precioventa:parseFloat(data.precioventa),
-        _preciocompra:parseFloat(data.preciocompra),
-        _id_categoria:categoriasItemSelect.id,
-        _id_empresa:dataempresa.id,
+        _idmarca: marcaItemSelect.id,
+        _stock: parseFloat(data.stock),
+        _stock_minimo: parseFloat(data.codigointerno),
+        _codigobarras: parseFloat(data.codigobarras),
+        _codigointerno: data.codigointerno,
+        _precioventa: parseFloat(data.precioventa),
+        _preciocompra: parseFloat(data.preciocompra),
+        _id_categoria: categoriasItemSelect.id,
+        _id_empresa: dataempresa.id,
       };
       await insertarproductos(p);
       onClose();
@@ -78,6 +78,8 @@ export function RegistrarProductos({ onClose, dataSelect, accion }) {
   }
   useEffect(() => {
     if (accion === "Editar") {
+      selectMarca({id:dataSelect.idmarca,descripcion:dataSelect.marca});
+      selectcategorias({id:dataSelect.id_categoria,descripcion:dataSelect.categoria});
     }
   }, []);
   return (
@@ -159,19 +161,17 @@ export function RegistrarProductos({ onClose, dataSelect, accion }) {
             <article>
               <InputText icono={<v.iconostockminimo />}>
                 <input
-                  step="0.01"
                   className="form__field"
-                  defaultValue={dataSelect.stock_minimo}
                   type="number"
+                  step="0.01"
                   placeholder=""
+                  defaultValue={dataSelect.stock_minimo}
                   {...register("stockminimo", {
                     required: true,
                   })}
                 />
                 <label className="form__label">Stock Minimo</label>
-                {errors.stockminimo?.type === "required" && (
-                  <p>Campo requerido</p>
-                )}
+                {errors.stockminimo?.type === "required" && <p>Campo requerido</p>}
               </InputText>
             </article>
 
@@ -208,7 +208,7 @@ export function RegistrarProductos({ onClose, dataSelect, accion }) {
                 <input
                   className="form__field"
                   defaultValue={dataSelect.codigobarras}
-                  type="number"
+                  type="text"
                   placeholder=""
                   {...register("codigobarras", {
                     required: true,
@@ -276,8 +276,6 @@ export function RegistrarProductos({ onClose, dataSelect, accion }) {
                 )}
               </InputText>
             </article>
-
-
           </section>
 
           <div className="btnguardarContent">

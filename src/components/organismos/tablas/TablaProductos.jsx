@@ -7,7 +7,13 @@ import {
   flexRender,
 } from "@tanstack/react-table";
 import styled from "styled-components";
-import { ContentAccionesTabla, Paginacion, useProductosStore, v } from "../../../index";
+import {
+  ColorcontentTable,
+  ContentAccionesTabla,
+  Paginacion,
+  useProductosStore,
+  v,
+} from "../../../index";
 import Swal from "sweetalert2";
 import { FaArrowsAltV } from "react-icons/fa";
 import { useState } from "react";
@@ -59,56 +65,90 @@ export function TablaProductos({
     {
       accessorKey: "codigointerno",
       header: "Codigo",
-      enableSorting:false,
-      cell: (info) => <td data-title="Codigo" className="ContentCell"> 
-        <span>
-          {info.getValue()}
-        </span>
+      enableSorting: false,
+      cell: (info) => (
+        <td data-title="Codigo" className="ContentCell">
+          <span>{info.getValue()}</span>
         </td>
+      ),
     },
     {
       accessorKey: "descripcion",
       header: "Descripción",
-      cell: (info) => <td data-title="Descripccion" className="ContentCell"> 
-        <span>
-          {info.getValue()}
-        </span>
+      cell: (info) => (
+        <td data-title="Descripccion" className="ContentCell">
+          <span>{info.getValue()}</span>
         </td>
+      ),
     },
     {
       accessorKey: "stock",
       header: "Stock",
-      enableSorting:false,
-      cell: (info) => <td data-title="Stock" className="ContentCell"> 
-        <span>
-          {info.getValue()}
-        </span>
+      enableSorting: false,
+      cell: (info) => (
+        <td data-title="Stock" className="ContentCell">
+          <span>{info.getValue()}</span>
         </td>
+      ),
     },
     {
       accessorKey: "codigobarras",
       header: "Lote",
-      enableSorting:false,
-      cell: (info) => <td data-title="Lote" className="ContentCell"> 
-        <span>
-          {info.getValue()}
-        </span>
+      enableSorting: false,
+      cell: (info) => (
+        <td data-title="Lote" className="ContentCell">
+          <span>{info.getValue()}</span>
         </td>
+      ),
     },
     {
       accessorKey: "precioventa",
       header: "Pr. Venta",
-      enableSorting:false,
-      cell: (info) => <td data-title="Pr. Venta" className="ContentCell"> 
-        <span>
-          {info.getValue()}
-        </span>
+      enableSorting: false,
+      cell: (info) => (
+        <td data-title="Pr. Venta" className="ContentCell">
+          <span>{info.getValue()}</span>
         </td>
+      ),
+    },
+    {
+      accessorKey: "preciocompra",
+      header: "Pr. Compra",
+      enableSorting: false,
+      cell: (info) => (
+        <td data-title="Pr. Compra" className="ContentCell">
+          <span>{info.getValue()}</span>
+        </td>
+      ),
+    },
+    {
+      accessorKey: "categoria",
+      header: "Categoria",
+      enableSorting: false,
+      cell: (info) => (
+        <td data-title="Categoria" className="ContentCell">
+          <ColorcontentTable $color={info.row.original.color} 
+          className="contentCategoria">
+            {info.getValue()}
+
+          </ColorcontentTable>
+        </td>
+      ),
+    },
+    {
+      accessorKey: "marca",
+      header: "Marca",
+      enableSorting: false,
+      cell: (info) => (
+        <td data-title="Marca" className="ContentCell">
+          <span>{info.getValue()}</span>
+        </td>
+      ),
     },
     {
       accessorKey: "acciones",
       header: "",
-      enableSorting:false,
+      enableSorting: false,
       cell: (info) => (
         <td className="ContentCell">
           <ContentAccionesTabla
@@ -137,15 +177,17 @@ export function TablaProductos({
                 <th key={header.id}>
                   {header.column.columnDef.header}
                   {header.column.getCanSort() && (
-                    <span style={{cursor:"pointer"}} 
-                    onClick={header.column.getToggleSortingHandler()}>
+                    <span
+                      style={{ cursor: "pointer" }}
+                      onClick={header.column.getToggleSortingHandler()}
+                    >
                       <FaArrowsAltV />
                     </span>
                   )}
                   {
                     {
-                      asc:" 🔼",
-                      desc:" 🔽"
+                      asc: " 🔼",
+                      desc: " 🔽",
                     }[header.column.getIsSorted()]
                   }
                 </th>
@@ -165,10 +207,13 @@ export function TablaProductos({
           ))}
         </tbody>
       </table>
-      <Paginacion table={table} irinicio = {()=>table.setPageIndex(0)}
-      pagina = {table.getState().pagination.pageIndex+1}
-      setPagina={setPagina}
-      maximo={table.getPageCount()}/>
+      <Paginacion
+        table={table}
+        irinicio={() => table.setPageIndex(0)}
+        pagina={table.getState().pagination.pageIndex + 1}
+        setPagina={setPagina}
+        maximo={table.getPageCount()}
+      />
     </Container>
   );
 }
