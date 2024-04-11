@@ -1,13 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import {
-  MarcaTemplate,
-  PersonalTemplate,
+  UsuariosTemplate,
   SpinnerLoader,
   useEmpresaStore,
   useMarcaStore,
 } from "../index";
 
-export function Personal() {
+export function Usuarios() {
   const { mostrarMarca, datamarca, buscarMarca, buscador } = useMarcaStore();
   const { dataempresa } = useEmpresaStore();
   const { isLoading, error } = useQuery({
@@ -31,5 +30,5 @@ export function Personal() {
     return <span>Error...</span>;
   }
 
-  return <PersonalTemplate data={datamarca}/>;
+  return <UsuariosTemplate data={datamarca}/>;
 }

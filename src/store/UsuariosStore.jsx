@@ -1,5 +1,11 @@
 import { create } from "zustand";
-import { InsertarAsignaciones, InsertarUsuarios, MostrarUsuarios, MostrarUsuariosTodos, supabase } from "../index";
+import {
+  InsertarAsignaciones,
+  InsertarUsuarios,
+  MostrarUsuarios,
+  MostrarUsuariosTodos,
+  supabase,
+} from "../index";
 
 export const useUsuariosStore = create((set, get) => ({
   insertarUsuarioAdmin: async (p) => {
@@ -39,13 +45,13 @@ export const useUsuariosStore = create((set, get) => ({
   selectusuarios: (p) => {
     set({ usuariosItemSelect: p });
   },
-  insertarusuarios: async (parametrosAuth,p) => {
+  insertarusuarios: async (parametrosAuth, p, datacheckpermisos) => {
     const { data, error } = await supabase.auth.signUp({
       email: parametrosAuth.correo,
-      password: parametrosAuth.pass
-    })
-    if(error){
-      return null
+      password: parametrosAuth.pass,
+    });
+    if (error) {
+      return null;
     }
     const dataUserNew = await InsertarUsuarios({
       nombres: p.nombres,
@@ -57,14 +63,22 @@ export const useUsuariosStore = create((set, get) => ({
       idauth: data.user.id,
       tipouser: p.tipouser,
       tipodoc: p.tipodoc,
-    })
+    });
     await InsertarAsignaciones({
       id_empresa: p.id_empresa,
-      id_usuario:dataUserNew.id
-    })
-    const { mostrarusuarios } = get();
-    const { parametros } = get();
-    set(mostrarusuarios(parametros));
+      id_usuario: dataUserNew.id,
+    });
+    datacheckpermisos.forEach(async (item) => {
+      if (item.check) {
+        let parametrospermisos = {
+          id_usuario: dataUserNew.id,
+          id_modulo: item.id,
+        };
+        await InsertarPermisos(parametrospermisos);
+      }
+    });
+    await supabase.auth.signOut();
+    return data.user;
   },
   eliminarusuarios: async (p) => {
     await Eliminarusuarios(p);
