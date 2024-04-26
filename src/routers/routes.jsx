@@ -10,7 +10,8 @@ import {
   UserAuth,
   useEmpresaStore,
   useUsuariosStore,Categorias, Productos,
-  Usuarios
+  Usuarios,
+  ApiTemplate
 } from "../index";
 import { useQuery } from "@tanstack/react-query";
 export function MyRoutes() {
@@ -46,6 +47,7 @@ export function MyRoutes() {
         <Route path="/configurar/categorias" element={<Categorias/>} />
         <Route path="/configurar/productos" element={<Productos/>} />
         <Route path="/configurar/personal" element={<Usuarios/>} />
+        <Route path="/configurar/api" element={<ApiTemplate/>} />        
       </Route>
     </Routes>
   );

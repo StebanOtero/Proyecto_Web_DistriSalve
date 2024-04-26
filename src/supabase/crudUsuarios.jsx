@@ -93,4 +93,13 @@ export async function EliminarPermisos(p) {
     alert("Error al eliminar");
   }
 }
+export async function MostrarModulos() {
+
+  const {data} = await supabase
+  .from("modulos")
+  .select();
+  return data;
+  
+}
+
 

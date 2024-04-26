@@ -15,18 +15,25 @@ import {
   ListaGenerica,
   useCategoriasStore,
   RegistrarCategorias,
+  TipoDocData,
+  TipouserData,
+  ListaModulos,
 } from "../../../index";
 import { useForm } from "react-hook-form";
 import { useEmpresaStore } from "../../../store/EmpresaStore";
 export function RegistrarUsuarios({ onClose, dataSelect, accion }) {
-  const [tipodoc, setTipodoc] = useState({icono:"", descripcion: "otros"});
+  const [tipodoc, setTipodoc] = useState({ icono: "", descripcion: "otros" });
+  const [tipouser, setTipouser] = useState({
+    icono: "",
+    descripcion: "empleado",
+  });
   const { insertarproductos, editarproductos } = useProductosStore();
   const { dataempresa } = useEmpresaStore();
   const { marcaItemSelect, selectMarca, datamarca } = useMarcaStore();
   const { categoriasItemSelect, datacategorias, selectcategorias } =
     useCategoriasStore();
   const [stateTipodoc, setStateTipodoc] = useState(false);
-  const [stateCategoria, setStateCategoria] = useState(false);
+  const [stateTipouser, setStateTipouser] = useState(false);
   const [openRegistroMarca, SetopenRegistroMarca] = useState(false);
   const [openRegistroCategoria, SetopenRegistroCategoria] = useState(false);
   const [subaccion, setAccion] = useState("");
@@ -159,90 +166,93 @@ export function RegistrarUsuarios({ onClose, dataSelect, accion }) {
                 color="#fc6027"
                 texto1="🪪"
                 texto2={tipodoc.descripcion}
-                funcion={()=>setTipodoc(!stateTipodoc)}
+                funcion={() => setStateTipodoc(!stateTipodoc)}
               />
-              {
-                stateTipodoc && (
-                  <ListaGenerica/>
-                )
-              }
+              {stateTipodoc && (
+                <ListaGenerica
+                  data={TipoDocData}
+                  bottom="-260px"
+                  scroll="scroll"
+                  setState={() => setStateTipodoc(!stateTipodoc)}
+                  funcion={(p) => setStateTipodoc(p)}
+                />
+              )}
             </ContainerSelector>
+
+            <article>
+              <InputText icono={<v.icononombre />}>
+                <input
+                  className="form__field"
+                  defaultValue={dataSelect.nro_doc}
+                  type="number"
+                  placeholder=""
+                  {...register("nrodoc", {
+                    required: true,
+                  })}
+                />
+                <label className="form__label">Nro. Doc</label>
+                {errors.nrodoc?.type === "required" && <p>Campo requerido</p>}
+              </InputText>
+            </article>
+
+            <article>
+              <InputText icono={<v.icononombre />}>
+                <input
+                  step="0.01"
+                  className="form__field"
+                  defaultValue={dataSelect.telefono}
+                  type="text"
+                  placeholder=""
+                  {...register("telefono", {
+                    required: true,
+                  })}
+                />
+                <label className="form__label">Telefono</label>
+                {errors.telefono?.type === "required" && <p>Campo requerido</p>}
+              </InputText>
+            </article>
+
+            <article>
+              <InputText icono={<v.icononombre />}>
+                <input
+                  className="form__field"
+                  defaultValue={dataSelect.direccion}
+                  type="text"
+                  placeholder=""
+                  {...register("direccion", {
+                    required: true,
+                  })}
+                />
+                <label className="form__label">Direccion</label>
+                {errors.direccion?.type === "required" && (
+                  <p>Campo requerido</p>
+                )}
+              </InputText>
+            </article>
           </section>
 
           <section className="seccion2">
-            <article>
-              <InputText icono={<v.iconocodigobarras />}>
-                <input
-                  className="form__field"
-                  defaultValue={dataSelect.codigobarras}
-                  type="text"
-                  placeholder=""
-                  {...register("codigobarras", {
-                    required: true,
-                  })}
+            <ContainerSelector>
+              <label>Tipo: </label>
+              <Selector
+                color="#fc6027"
+                texto1="🧑‍💼"
+                texto2={tipouser.descripcion}
+                funcion={() => setStateTipouser(!stateTipouser)}
+              />
+              {stateTipouser && (
+                <ListaGenerica
+                  data={TipouserData}
+                  funcion={(p) => setTipouser(p)}
+                  bottom="-150px"
+                  scroll="scroll"
+                  setState={() => setStateTipouser(!stateTipouser)}
                 />
-                <label className="form__label">Lote</label>
-                {errors.codigobarras?.type === "required" && (
-                  <p>Campo requerido</p>
-                )}
-              </InputText>
-            </article>
+              )}
+            </ContainerSelector>
+            PERMISOS: 🔐
+            <ListaModulos/>
 
-            <article>
-              <InputText icono={<v.iconocodigointerno />}>
-                <input
-                  className="form__field"
-                  defaultValue={dataSelect.codigointerno}
-                  type="text"
-                  placeholder=""
-                  {...register("codigointerno", {
-                    required: true,
-                  })}
-                />
-                <label className="form__label">Codigo Interno</label>
-                {errors.codigointerno?.type === "required" && (
-                  <p>Campo requerido</p>
-                )}
-              </InputText>
-            </article>
-
-            <article>
-              <InputText icono={<v.iconoprecioventa />}>
-                <input
-                  step="0.01"
-                  className="form__field"
-                  defaultValue={dataSelect.precioventa}
-                  type="number"
-                  placeholder=""
-                  {...register("precioventa", {
-                    required: true,
-                  })}
-                />
-                <label className="form__label">Precio de Venta</label>
-                {errors.precioventa?.type === "required" && (
-                  <p>Campo requerido</p>
-                )}
-              </InputText>
-            </article>
-
-            <article>
-              <InputText icono={<v.iconopreciocompra />}>
-                <input
-                  step="0.01"
-                  className="form__field"
-                  defaultValue={dataSelect.preciocompra}
-                  type="number"
-                  placeholder=""
-                  {...register("preciocompra", {
-                    required: true,
-                  })}
-                />
-                <label className="form__label">Precio de Compra</label>
-                {errors.preciocompra?.type === "required" && (
-                  <p>Campo requerido</p>
-                )}
-              </InputText>
-            </article>
           </section>
 
           <div className="btnguardarContent">
