@@ -64,8 +64,8 @@ export function RegistrarProductos({ onClose, dataSelect, accion }) {
         _descripcion: ConvertirCapitalize(data.descripcion),
         _idmarca: marcaItemSelect.id,
         _stock: parseFloat(data.stock),
-        _stock_minimo: parseFloat(data.codigointerno),
-        _codigobarras: parseFloat(data.codigobarras),
+        _stock_minimo: parseFloat(data.stockminimo),
+        _codigobarras: data.codigobarras,
         _codigointerno: data.codigointerno,
         _precioventa: parseFloat(data.precioventa),
         _preciocompra: parseFloat(data.preciocompra),
@@ -176,7 +176,7 @@ export function RegistrarProductos({ onClose, dataSelect, accion }) {
             </article>
 
             <ContainerSelector>
-              <label>categoria:</label>
+              <label>Categoria:</label>
               <Selector
                 funcion={() => setStateCategoria(!stateCategoria)}
                 state={stateCategoria}

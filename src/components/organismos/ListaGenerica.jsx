@@ -15,7 +15,7 @@ export function ListaGenerica({ data, setState, funcion, scroll, bottom }) {
         {data.map((item, index) => {
           return (
             <ItemContainer key={index} onClick={() => seleccionar(item)}>
-              <span>🗽</span>
+              <span>⭐</span>
               <span>{item.descripcion}</span>
             </ItemContainer>
           );
