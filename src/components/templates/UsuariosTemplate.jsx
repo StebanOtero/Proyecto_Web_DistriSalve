@@ -10,6 +10,8 @@ import {
   Buscador,
   useMarcaStore,
   RegistrarUsuarios,
+  TablaUsuarios,
+  useUsuariosStore,
 } from "../../index";
 import { useState } from "react";
 export function UsuariosTemplate({ data }) {
@@ -22,7 +24,7 @@ export function UsuariosTemplate({ data }) {
     setAccion("Nuevo");
     setdataSelect([]);
   };
-  const {setBuscador} = useMarcaStore()
+  const {setBuscador} = useUsuariosStore()
   return (
     <Container>
       {openRegistro && 
@@ -53,7 +55,7 @@ export function UsuariosTemplate({ data }) {
         <Buscador setBuscador={setBuscador}/>
       </section>
       <section className="main">
-        <TablaMarca
+        <TablaUsuarios
           data={data}
           SetopenRegistro={SetopenRegistro}
           setdataSelect={setdataSelect}

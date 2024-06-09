@@ -5,10 +5,10 @@ export function Home() {
   const { data, isLoading } = useQuery({
     queryKey: [
       "contar usuarios por empresa",
-      { idempresa: dataempresa.empresa?.id },
+      { idempresa: dataempresa?.id },
     ],
     queryFn: () =>
-      contarusuariosXempresa({ id_empresa:dataempresa.empresa?.id }),
+      contarusuariosXempresa({ id_empresa:dataempresa?.id }),
     enabled: !!dataempresa,
   });
   return <HomeTemplate />;

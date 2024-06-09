@@ -103,14 +103,6 @@ export const DataModulosConfiguracion =[
     link:"/configurar/marca",
    
   },
-  {
-    title:"Productos API",
-    subtitle:"productos muestra en tienda  online",
-    icono:"https://i.ibb.co/VYbMRLZ/categoria.png",
-    link:"/configurar/api",
-    
-  },
-
 ]
 //tipo usuario
 export const TipouserData = [
