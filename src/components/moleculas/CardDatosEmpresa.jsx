@@ -1,5 +1,5 @@
 import styled from "styled-components";
-export function CardDatosEmpresa({ titulo, valor, img }) {
+export function CardDatosEmpresa({ titulo, valor, img, descripcion  }) {
   return (
     <Container>
       <div className="card">
@@ -9,6 +9,7 @@ export function CardDatosEmpresa({ titulo, valor, img }) {
             <p className="price-number">{valor}</p>
             {img && <igm src={img} />}
           </div>
+          {descripcion && <p className="description">{descripcion}</p>}
         </div>
       </div>
     </Container>
@@ -45,6 +46,12 @@ const Container = styled.div`
         img {
           width: 50px;
         }
+      }
+        .description {
+        color: #7a7a7a;
+        font-size: 0.9rem;
+        text-align: center;
+        margin-top: 0.5rem;
       }
     }
   }

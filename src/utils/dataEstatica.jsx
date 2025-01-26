@@ -5,16 +5,16 @@ import {
 } from "react-icons/ai";
 
 export const DesplegableUser = [
-  {
-    text: "Mi perfil",
-    icono: <v.iconoUser/>,
-    tipo: "miperfil",
-  },
-  {
-    text: "Configuracion",
-    icono: <v.iconoSettings/>,
-    tipo: "configuracion",
-  },
+  // {
+  //   text: "Mi perfil",
+  //   icono: <v.iconoUser/>,
+  //   tipo: "miperfil",
+  // },
+  // {
+  //   text: "Configuracion",
+  //   icono: <v.iconoSettings/>,
+  //   tipo: "configuracion",
+  // },
   {
     text: "Cerrar sesión",
     icono: <v.iconoCerrarSesion/>,
@@ -45,7 +45,7 @@ export const LinksArray = [
 ];
 export const SecondarylinksArray = [
   {
-    label: "Configuración",
+    label: "Gestión Inv",
     icon: <AiOutlineSetting />,
     to: "/configurar",
   },
@@ -82,13 +82,13 @@ export const DataModulosConfiguracion =[
    
   },
 
-  {
-    title:"Tu empresa",
-    subtitle:"configura tus opciones básicas",
-    icono:"https://i.ibb.co/x7mHPgm/administracion-de-empresas.png",
-    link:"/configurar/empresa",
+  // {
+  //   title:"Tu empresa",
+  //   subtitle:"configura tus opciones básicas",
+  //   icono:"https://i.ibb.co/x7mHPgm/administracion-de-empresas.png",
+  //   link:"/configurar/empresa",
     
-  },
+  // },
   {
     title:"Categoria de productos",
     subtitle:"asigna categorias a tus productos",
@@ -118,15 +118,19 @@ export const TipouserData = [
 //tipodoc
 export const TipoDocData = [
   {
-    descripcion: "Dni",
-    icono: "🪖",
-  },
-  {
-    descripcion: "Libreta electoral",
+    descripcion: "Cédula de ciudadania",
     icono: "👑",
   },
   {
-    descripcion: "Otros",
+    descripcion: "Tarjeta de identidad",
+    icono: "👑",
+  },
+  {
+    descripcion: "Registro civil",
+    icono: "👑",
+  },
+  {
+    descripcion: "Cédula de Extranjería",
     icono: "👑",
   },
 ];

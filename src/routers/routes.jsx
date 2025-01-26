@@ -9,8 +9,18 @@ import {
   SpinnerLoader,
   UserAuth,
   useEmpresaStore,
-  useUsuariosStore,Categorias, Productos,
+  useUsuariosStore,
+  Categorias,
+  Productos,
   Usuarios,
+  Kardex,
+  Reportes,
+  StockActualTodos,
+  StockActualTodosPorProducto,
+  StockBajoMinimo,
+  KardexEntradaSalida,
+  StockInventarioValorado,
+
 } from "../index";
 import { useQuery } from "@tanstack/react-query";
 export function MyRoutes() {
@@ -32,12 +42,10 @@ export function MyRoutes() {
   });
 
   const { data: datapermisos } = useQuery({
-    queryKey: ["mostrar permisos", {id_usuario:idusuario}], 
-    queryFn: () => mostrarpermisos({ id_usuario:idusuario}),
+    queryKey: ["mostrar permisos", { id_usuario: idusuario }],
+    queryFn: () => mostrarpermisos({ id_usuario: idusuario }),
     enabled: !!datausuarios,
   });
-
-
   if (isLoading) {
     return <SpinnerLoader />;
   }
@@ -46,14 +54,22 @@ export function MyRoutes() {
   }
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route element={<ProtectedRoute user={user} redirectTo="/login" />}>
+        <Route path="/login" element={<Login />} />
+        <Route element={<ProtectedRoute user={user} redirectTo="/login" />}>
         <Route path="/" element={<Home />} />
-        <Route path="/configurar" element={<Configuracion/>} />
-        <Route path="/configurar/marca" element={<Marca/>} />
-        <Route path="/configurar/categorias" element={<Categorias/>} />
-        <Route path="/configurar/productos" element={<Productos/>} />
+        <Route path="/configurar" element={<Configuracion />} />
+        <Route path="/configurar/marca" element={<Marca />} />
+        <Route path="/configurar/categorias" element={<Categorias />} />
+        <Route path="/configurar/productos" element={<Productos />} />
         <Route path="/configurar/personal" element={<Usuarios />} />
+        <Route path="/kardex" element={<Kardex />}></Route>
+        <Route path="/reportes" element={<Reportes />}>
+        <Route path="stock-actual-todos" element={<StockActualTodos />} />
+        <Route path="stock-actual-por-producto" element={<StockActualTodosPorProducto />} />
+        <Route path="stock-bajo-minimo" element={<StockBajoMinimo />} />
+        <Route path="kardex-entradas-salidas" element={<KardexEntradaSalida />}/>
+        <Route path="inventario-valorado" element={<StockInventarioValorado />}
+        /></Route>
       </Route>
     </Routes>
   );

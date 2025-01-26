@@ -12,7 +12,7 @@ export function ListaGenerica({ data, setState, funcion, scroll, bottom }) {
         <BtnCerrar funcion={setState} />
       </section>
       <section className="contentItems">
-        {data.map((item, index) => {
+        {data?.map((item, index) => {
           return (
             <ItemContainer key={index} onClick={() => seleccionar(item)}>
               <span>⭐</span>
@@ -44,6 +44,14 @@ const Container = styled.div`
   }
   .contentItems {
     overflow-y: ${(props) => props.$scroll};
+    &::-webkit-scrollbar {
+      width: 6px;
+      border-radius: 10px;
+    }
+    &::-webkit-scrollbar-thumb{
+      background-color: #484848;
+      border-radius: 10px;
+    }
   }
 `;
 
