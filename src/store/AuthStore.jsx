@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { create } from "zustand";
-import { supabase } from "../supabase/supabase.config";
+import { supabase } from "../index";
 
 export const useAuthStore = create((set, get) => ({
   isAuth:false,
