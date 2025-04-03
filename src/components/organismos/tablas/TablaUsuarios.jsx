@@ -66,19 +66,39 @@ export function TablaUsuarios({
         </td>
     },
     {
-      accessorKey: "tipouser",
-      header: "T.User",
-      cell: (info) => <td data-title="T.User" className="ContentCell"> 
+      accessorKey: "nro_doc",
+      header: "No. Documento",
+      enableSorting:false,
+      cell: (info) => <td data-title="No. Documento" className="ContentCell"> 
         <span>
           {info.getValue()}
         </span>
         </td>
     },
     {
-      accessorKey: "estado",
-      header: "Estado",
+      accessorKey: "telefono",
+      header: "Telefono",
       enableSorting:false,
-      cell: (info) => <td data-title="Estado" className="ContentCell"> 
+      cell: (info) => <td data-title="Telefono" className="ContentCell"> 
+        <span>
+          {info.getValue()}
+        </span>
+        </td>
+    },
+    {
+      accessorKey: "direccion",
+      header: "Direccion",
+      enableSorting:false,
+      cell: (info) => <td data-title="Direccion" className="ContentCell"> 
+        <span>
+          {info.getValue()}
+        </span>
+        </td>
+    },
+    {
+      accessorKey: "tipouser",
+      header: "T.User",
+      cell: (info) => <td data-title="T.User" className="ContentCell"> 
         <span>
           {info.getValue()}
         </span>
